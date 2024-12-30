@@ -35,14 +35,16 @@ In the current iteration of the game, 2048 is not defined as a win condition. Th
 
 To run the project in demo mode, both the frontend and backend are needed. Currently, there is no way to specify the game server. The API of the server is hardcoded in the API utility class.
 
-The project can be either run in development mode or 'production mode'. To run the project in development mode, the Java backend and the next.js frontend can be run with the usual steps for both environments (Maven / npm). For demonstration purposes, a docker-compose file is provided. Simply clone the repository and run the following command in the agis-spring-server directory of the project:
+The project can be either run in development mode or 'production mode'. To run the project in development mode, the Java backend and the next.js frontend can be run seperately (Maven / npm). For demonstration purposes, a `docker-compose.yaml` file is provided. Simply clone the repository and run the **following command** in the `agis-spring-server` directory of the project:
 
 ```bash
 docker-compose up --build
 ```
 
-To run the docker-compose file, docker and docker-compose need to be installed on the machine. The frontend will be available on 'localhost:3000'.
-When initially running the command, it might take a while to build the images and start the containers.
+To run the docker-compose file, **docker** and **docker-compose** need to be installed on the machine. The frontend will be available on 'localhost:3000'.
+When initially running the command, it might take a while to build the images and start the containers. For Linux `sudo` might be necessary to run Docker-Compose. Docker-Compose has been tested on MacOS Sequoia and Fedora 41.
+If for any reason the Docker build should fail -> run `npm install` and `npm run dev` in `aigs-react-client` directory and start the Java backend from the CLI or with the IDE.
+
 
 <p align="center">
   <img src="github-media/dockercompose.png" alt="Docker-Compose" title="Docker-Compose"/>
