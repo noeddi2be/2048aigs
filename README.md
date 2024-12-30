@@ -93,10 +93,10 @@ The implementation is split into two parts: The frontend and the backend. The fr
 The first step was to add an Enum for the new game type, which was pretty straightforeward. Normally in Java, packages are written in lowercase, classes are written in CamelCase and Enums are written in UPPERCASE. 
 So I wanted to refactor but noticed, that the server was not working correctly anymore. After debugging, i found that the enum as well as the classname need to have the same value. I did not bother to refactor the code and just left it as it is. This could be improved in the future.
 
-The next step was to implement the game logic. I have created a new Class called TwentyFourtyEight.java which implements GameEngine. I needed to implement the newGame() method as well as the move() method.
+The next step was to implement the game logic. I have created a new Class called TwentyFourtyEight.java which implements GameEngine. I needed to implement the `newGame()` method as well as the `move()` method.
 I also wanted to have a score for the game, so I added an instance variable for score. I did not yet know how to return the score and postponed it to a later point.
 
-The move() method was accepts a Game and a HashMap<String, String> with the move instructions.
+The `move()` method accepts a `Game` and a `HashMap<String, String>` with the move instructions.
 For 2048, the move instructions are simple: just a direction.
 
 ```java
@@ -116,7 +116,7 @@ if (move.get(KEY).equals(right)) {
 }
 ```
 
-But before we can move, we need a board and a method to initialize the board. I just inizialized the board long[][] with a size of 4x4 and filled it with zeros. 
+But before we can move, we need a board and a method to initialize the board. I just inizialized the `long[][] board` with a size of 4x4 and filled it with zeros. 
 
 The challenging part was the moving of the numbers as well as the consolidation according to the game rules of 2048. I chose to create a Data Transfer Object to store certain values for further processing.
 
@@ -130,10 +130,10 @@ public MoveDTO() {
 }
 ```
 
-I thought it would be easier to work with one-dimensional arrays, so i chose to store a single row in each dto. I also wanted to transfer the 'local score' of each row, so I included it in the dto.
+I thought it would be easier to work with one-dimensional arrays, so i chose to store a single row in each DTO. I also wanted to transfer the 'local score' of each row, so I included it in the dto.
 
-Next i needed a method to consolidate the numbers to the end of a row, as well as to the beginning of a row. The good thing is, because i work in one dimension, no matter if the consolidation is horizontal or vertical, it is always either consolidation to the start, or to the end -> two methods for all 4 directions.
-This was pretty tricky to implement correctly, I therefore created some tests to ensure proper functioning of the code. The tests are not fully covering the code, but were sufficient for my use case.
+Next I needed a method to consolidate the numbers to the end of a row, to the beginning of a row, to the end of a column and to the beginning of a column to cover all directions. The good thing was, because I chose work in one dimension, no matter if the consolidation is horizontal or vertical, it is always either consolidation to the start, or to the end -> two methods for all 4 directions.
+This was pretty tricky to implement correctly, I therefore created some tests to ensure proper functioning of the code. The tests are not providing full coverage, but they were sufficient for my use case.
 After each consolidation, i return a DTO with the updated array.
 
 ```java
@@ -185,12 +185,12 @@ Finally, I needed to implement the move methods for each direction, implement a 
 I still needed a method to relay the score to the frontend, which was a bit tricky. As the Game does not have a method to return the score, I did not want to use reflection and I wanted to avoid updating the controller, I chose to use the existing difficulty variable to store the score. The difficulty is not used in my implementation of the game - and in a sense it is the 'difficulty' reached by the player. It could have been solved differently, but I wanted to not break compatibility. The best solution would have been to update the Game class and add a new method there.
 
 ### Next.js Frontend
-The next step was to create the frontend for the game. I chose to use Next.js, a React framework, as it is easy to use and I am already a bit familiar with it.
-First i needed to test the API. I therefore created a .http file with the important API calls and tested if all was working as expected.
+The next step was to create the frontend for the game. I chose to use Next.js, a React framework, as I am already a bit familiar with it.
+First i needed to test the API. I therefore created a `2048.http` file in the spring-server package with the important API calls and tested if all was working as expected.
 
-The project is a single page application with two main files, the layout.tsx and page.tsx. In layout.tsx I only added the Title, Description and added a new Google Font. I also changed the background of the application in globals.css.
+The project is a single page application with two main files, the `layout.tsx` and `page.tsx`. In `layout.tsx` I only added the Title, Description and added a new Google Font. I also changed the background of the application in `globals.css`.
 
-The main part of the application is page.tsx, a react component that renders the game interface. I chose to use a single component for most of the game interfase, and only implemented the gameboard as a separate component. 
+The main part of the application is `page.tsx`, a react component that renders the game interface. I chose to use a single component for most of the game interfase, and only implemented the gameboard as a separate component. 
 
 In the HomePage component, I use React's state to manage the board, username, password, a token, the score and the game over state. 
 
@@ -204,7 +204,7 @@ const HomePage: React.FC = () => {
   const [score, setScore] = useState(0);
 ```
 
-The API calls are implemented in the api.ts file.
+The API calls are implemented in the `api.ts` file.
 
 ```ts
 import axios from 'axios';
@@ -220,7 +220,7 @@ export const registerUser = async (username: string, password: string) => {
 };
 ```
 
-I imported the API calls to the page.tsx file.
+I imported the API calls to the `page.tsx` file.
 
 ```ts
 import { registerUser, loginUser, startNewGame, makeMove } from './utils/api';
@@ -243,7 +243,7 @@ const handleRegister = async () => {
 };
 ```
 
-Finally I returned the JSX code to render the game interface.
+Finally I returned the TSX code to render the game interface.
 For the colors i have used the colors of the original game, which I have found in a React implementation of the game by [IvanVergiliev](https://github.com/IvanVergiliev/2048-react/blob/master/src/main.scss).
 
 For the React part of the game, I have used the help of Copilot, as I am not entirely familiar with the framework. But with each implementation that I am able to do, I get more and more familiar which is great. 
