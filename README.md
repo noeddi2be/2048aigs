@@ -52,7 +52,7 @@ Docker-Compose has been tested on MacOS Sequoia and Fedora 41. When initially ru
 
 For Linux `sudo` might be necessary to run Docker-Compose. 
 
-If for any reason the Docker build should fail run the **following commands** in the `aigs-react-client` directory and start the Java backend from the CLI or with your IDE/Editor.
+If for any reason the Docker build should fail, run the **following commands** in the `aigs-react-client` directory and start the Java backend from the CLI or with your IDE/Editor.
 
 ```shell
 npm install
