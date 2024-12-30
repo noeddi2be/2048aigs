@@ -1,0 +1,54 @@
+@token = 2e2139bc7ba7d400
+
+### Register a new user
+POST http://localhost:50005/users/register
+Content-Type: application/json
+
+{
+  "userName": "testUser",
+  "password": "testPassword"
+}
+
+### Login a user
+POST http://localhost:50005/users/login
+Content-Type: application/json
+
+{
+  "userName": "testUser",
+  "password": "testPassword"
+}
+
+### Logout a user
+POST http://localhost:50005/users/logout
+Content-Type: application/json
+
+{
+  "userName": "testUser"
+}
+
+### Create a new game
+POST http://localhost:50005/game/new
+Content-Type: application/json
+
+{
+  "token":"{{token}}",
+  "gameType":"TwentyFourtyEight"
+}
+
+### Make a move
+POST http://localhost:50005/game/move
+Content-Type: application/json
+
+{
+  "token": "{{token}}",
+  "move": "right"
+}
+
+### List all games
+GET http://localhost:50005/games
+
+### List all users
+GET http://localhost:50005/users
+
+### Ping
+GET http://localhost:50005/ping
